@@ -38,4 +38,23 @@ for x in X_test:
 		Y_pred.append(1)
 	else:
 		Y_pred.append(0)
+TP=TN=FP=FN=0
+for i,j in zip(Y_pred,y_test):
+	if(i==1 and j==1):
+		TP=TP+1
+	elif(i==1 and j==0):
+		FP=FP+1
+	elif(i==0 and j==1):
+		FN=FN+1
+	else:
+		TN=TN+1
+cnf_mat=confusion_matrix(y_test,Y_pred)
+cnf=[[TP,FN],[FP,TN]]
+acc=(TP+TN)/(TP+TN+FP+FN)
+recall=TP/(TP+FN)
+prec=TP/(TP+FP)
+f1_score=statistics.harmonic_mean([recall,prec])
 print(f"Accuracy:{accuracy_score(y_test,Y_pred)}")
+print("Sklearn Confusion matrix:\n ",cnf_mat)
+print("Manual confusion matrix:\n",cnf)
+print(f"Accuracy:{acc}\nRecall:{recall}\nPrecision:{prec}\nf1_score:{f1_score}")
