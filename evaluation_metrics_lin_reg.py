@@ -31,14 +31,16 @@ for i in range(epoch):
 Y_pred=np.dot(X_test,W)+b
 mae=0
 mse=0
-x=0
+x=a=b=0
 y_mean=np.mean(y_test)
 for i,j in zip(y_test,Y_pred):
 	mae=mae+abs(i-j)
 	mse=mse+((i-j)**2)
-	x=x+(((i-j)**2)/((i-y_mean)**2))
+	a=a+((i-j)**2)
+	b=b+((i-y_mean)**2)
 mae=mae/len(Y_pred)
 mse=mse/len(Y_pred)
+x=a/b
 r2=1-x
 print(f"MAE:{mae}\nMSE:{mse}\nRMSE:{np.sqrt(mse)}\nR2 score:{r2}")
 
