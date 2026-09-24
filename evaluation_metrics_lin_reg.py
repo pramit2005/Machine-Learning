@@ -20,7 +20,7 @@ X_test=scaler.transform(X_test)
 n_samples,n_features=X_train.shape
 W=np.zeros(n_features)
 b=0
-alpha=0.001
+alpha=0.0001
 for i in range(epoch):
 	y_pred=np.dot(X_train,W)+b
 	error=(y_pred-y_train)
@@ -28,8 +28,17 @@ for i in range(epoch):
 	db=(2/n_samples)*np.sum(error)
 	W=W-(alpha*dW)
 	b=b-(alpha*db)
-print(f"W:{W} b:{b}")
 Y_pred=np.dot(X_test,W)+b
-mse=mean_squared_error(y_test,Y_pred)
-rmse=np.sqrt(mse)
-print(f"RMSE: {rmse:.2f}")
+mae=0
+mse=0
+x=0
+y_mean=np.mean(y_test)
+for i,j in zip(y_test,Y_pred):
+	mae=mae+abs(i-j)
+	mse=mse+((i-j)**2)
+	x=x+(((i-j)**2)/((i-y_mean)**2))
+mae=mae/len(Y_pred)
+mse=mse/len(Y_pred)
+r2=1-x
+print(f"MAE:{mae}\nMSE:{mse}\nRMSE:{np.sqrt(mse)}\nR2 score:{r2}")
+
